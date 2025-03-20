@@ -1,18 +1,64 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FarelVPN</title>
-</head>
-<body>
-    <h1>FarelVPN X Rerechan02</h1>
-    
-    <!-- Video element -->
-    <video width="640" height="360" controls>
-        <source src="https://raw.githubusercontent.com/farelvpn/farelvpn.github.io/main/ayaka.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+<!DOCTYPE html>  
+<html lang="id">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">  
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            overflow: hidden;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            pointer-events: none; /* Mencegah interaksi (klik tidak berfungsi) */
+            position: absolute;
+        }
+    </style>
+</head>  
+<body>  
+    <video id="video" autoplay playsinline muted loop>  
+        <source src="https://raw.githubusercontent.com/farelvpn/farelvpn.github.io/main/ayaka.mp4" type="video/mp4">  
+    </video>  
 
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("video");
+
+            // Coba paksa autoplay jika dicegah oleh browser
+            video.play().catch(() => {
+                video.muted = true;
+                video.play();
+            });
+
+            // Paksa fullscreen di mobile
+            function requestFullScreen() {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                }
+            }
+
+            // Jalankan fullscreen setelah interaksi pertama
+            document.addEventListener("click", requestFullScreen);
+            document.addEventListener("touchstart", requestFullScreen);
+        });
+    </script>
+</body>  
 </html>
